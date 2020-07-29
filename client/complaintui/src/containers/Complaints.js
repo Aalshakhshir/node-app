@@ -2,7 +2,8 @@ import React from 'react';
 import './styles.css';
 
 import { connect } from 'react-redux';
-import ComplaintItem from '../components/ComplaintItem';
+import { Button } from '@material-ui/core';
+import ComplaintsTable from '../components/ComplaintsTable';
 import { getUserComplaints, addNewUserComplaint, updateComplaintStatusByAdmin } from '../actions/ComplaintsActions';
 import ComplaintAddForm from '../components/ComplaintAddForm';
 
@@ -50,16 +51,11 @@ const Complaints = ({ complaints, getUserComplaintsConnect, user, history, updat
     }
     return (
         <div>
-            {complaints && complaints.length > 0 && complaints.map(item => {
-                return (
-                    <div key={item.id}>
-                        <ComplaintItem item={item} isAdmin={user.isAdmin} handleStatusUpdate={handleStatusUpdate} value={value} handleSubmit={handleSubmit} />
-                    </div>
-                )
-            })
+            {complaints && complaints.length > 0 && (
+                <ComplaintsTable value={value} isAdmin={user.isAdmin} rows={complaints} handleStatusUpdate={handleStatusUpdate} handleSubmit={handleSubmit} />)
             }
             {!user.isAdmin
-                && <button onClick={() => setShowComplaintAddForm(true)}>add a New Compliant</button>}
+                && <Button onClick={() => setShowComplaintAddForm(true)}>add a New Compliant</Button>}
             {showComplaintAddForm && (
                 <ComplaintAddForm inputs={inputs} handleInputChange={handleInputChange} handleCreateComplaint={handleCreateComplaint} />
             )}

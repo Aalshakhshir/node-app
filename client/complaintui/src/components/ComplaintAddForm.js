@@ -1,10 +1,11 @@
 import React from 'react';
+import { Button,TextareaAutosize } from '@material-ui/core';
 
 const ComplaintAddForm = ({ inputs, handleInputChange, handleCreateComplaint }) => {
     return (
-        <form onSubmit={handleCreateComplaint}>
-            <textarea style={{ margin: 10 }} value={inputs.message} onChange={handleInputChange} maxLength={500} />
-            <button type="submit">Create New </button>
+        <form onSubmit={handleCreateComplaint} style={{ marginTop: '10%' }}>
+            <TextareaAutosize aria-label="minimum height" value={inputs.message} onChange={handleInputChange} rowsMin={3} placeholder="Minimum 3 rows for comp description" />
+            <Button type="submit" variant="secondary">Create New </Button>
         </form>
     )
 }

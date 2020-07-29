@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 120,
         marginLeft: 80,
         height: 20,
-        paddingTop: -18
     },
 }));
 
