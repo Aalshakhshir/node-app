@@ -27,36 +27,52 @@ const complaints = [
 
 // for admin to get all must be guarded with admin permits
 function getComplaints(req, res) {
-    // mock api for now until DB is structured and created
-     setTimeout(() => {
-        res.send([dummyComplaint]);
-     }, 400)
+    if (req.user.isAdmin) {
+        connection.getConnection((err) => {
+            if (err) console.log(err);
+            connection.query("SELECT * from complaints", (err, results, fields) => {
+                if (err) console.log(err);
+                res.json(results)
+            });
+        })
+    }
+    else res.status(403)
 }
 
 function updateComplaintStatus(req, res) {
     const id = req.params.id;
     const newStatus = req.body.status
     // to use mysql update statement
-
-    setTimeout(() => {
-        complaints.map(item => {
-            if (item.id === id) {
-                res.json({...item, status: newStatus })
-                return {...item, status: newStatus}
-            }
-            return item;
+    
+    if (req.user.isAdmin) {
+        connection.getConnection((err) => {
+            if (err) console.log(err);
+            connect.query(`UPDATE complaints SET status = '${newStatus}' WHERE id = '${id}'`, (err, results, fields) => {
+                if (err) console.log(err);
+                res.json({ message: 'sucess' })
+            });
         })
-    })
+    }
 }
 function getComplaintsByUserId(req, res) {
+    console.log(req.params.id);
     const id = req.params.id;
     connection.getConnection((err) => {
-        if(err) console.log(err);
-        connection.query("SELECT * from complaints where userId=" + `${id}`, (err, results,fields) => {
+        if (err) console.log(err);
+        connection.query("SELECT * from complaints where userId=" + `${id}`, (err, results, fields) => {
             if (err) console.log(err);
-            res.json(complaints)
-        })
-         ;
+            res.json(results);
+        });
+    })
+}
+function createComplaint(req, res) {
+    const userId = req.user.userId;
+    connection.getConnection((err) => {
+        if(err) console.log(err);
+        connection.query(`INSERT INTO complaints SET ?`,{message: req.body.message, status: 'pending resolution', userId}, (err, results, fields) => {
+            if (err) console.log(err);
+            res.json({ success: true , complaintId: results[0].id})
+        });
     })
 }
 
@@ -64,4 +80,5 @@ module.exports = {
     getComplaintsByUserId,
     getComplaints,
     updateComplaintStatus,
+    createComplaint,
 }

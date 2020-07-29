@@ -10,7 +10,7 @@ const SignUpForm = ({ handleInputChange, handleSubmit }) => {
             <input type="text" onChange={handleInputChange} name="lastname" placeholder="last name" />
             <input type="text" onChange={handleInputChange} name="email" placeholder="email" />
             <input type="password" onChange={handleInputChange} name="password" placeholder="password" />
-            Sign Up: <button type="submit" placeholder="Sign Up" />
+            <button type="submit" placeholder="Sign Up">Sign Up</button>
         </form>
     )
 }
