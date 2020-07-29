@@ -1,0 +1,27 @@
+.form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 200px;
+    border: 1px solid #eee;
+}
+
+.form button {
+    width: 250px;
+    height: 20px;
+    background-color: '#eee';
+}
+.form input {
+    width: 250px;
+    height: 20px;
+    border-radius: 4px;
+    margin-top: 4px;
+
+}
+.item {
+    display: flex;
+}
+.item p {
+    margin: 8px;
+}
