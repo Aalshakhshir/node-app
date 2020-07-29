@@ -30,7 +30,7 @@ export default function complaints(state = INITIAL_STATE, action) {
         case ADD_NEW_COMPLAINT:
             return { ...state, loading: true };
         case ADD_NEW_COMPLAINT_SUCCESS:
-            return { ...state, complaints: [...complaints, action.payload], loading: false };
+            return { ...state, loading: false };
         case ADD_NEW_COMPLAINT_FAILURE:
             return { ...state, loading: false, error: action.payload.error }
         default:

@@ -14,6 +14,7 @@ export const loginUser = (username, password) => (dispatch) => {
             }
         })
         localStorage.setItem('token', res.token);
+        localStorage.setItem('userId', res.user.id);
     }).catch(e => {
         dispatch({
             type: LOGIN_USER_FAILURE,

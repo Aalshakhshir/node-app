@@ -23,7 +23,7 @@ export const getUserComplaints = (userId) => (dispatch, getState) => {
     })
 }
 
-export const updateComplaintStatusByAdmin = ({ id, newStatus } ) => (dispatch, getState) => {
+export const updateComplaintStatusByAdmin = ({ id, newStatus }) => (dispatch, getState) => {
     const token = getState().auth.user.token || localStorage.getItem('token');
     dispatch({
         type: UPDATE_COMPLAINT_STATUS
@@ -50,8 +50,8 @@ export const addNewUserComplaint = ({ id, message }) => (dispatch, getState) => 
     addNewComplaint({ id, message, token }).then(res => {
         dispatch({
             type: ADD_NEW_COMPLAINT_SUCCESS,
-            payload: res,
         })
+        dispatch(getUserComplaints(getState().auth.user.id || localStorage.getItem('userId')))
     }).catch(e => {
         dispatch({
             type: ADD_NEW_COMPLAINT_FAILURE,
