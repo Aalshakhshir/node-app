@@ -12,7 +12,7 @@ function login(req, res) {
         if (err) console.log(err);
         connection.query("SELECT * from users where username=" + `'${req.body.username}'`, function (err, results, fields) {
             console.log(err, results[0]);
-            if (err) console.log(err);
+            if (err) res.status(400);
             if (req.body.password === results[0].password) {
                 res.json({ token: generateAccessToken(results[0]), user: results[0] });
             }

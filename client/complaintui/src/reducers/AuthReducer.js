@@ -15,13 +15,13 @@ export default function Auth(state = INITIAL_STATE, action) {
         case LOGIN_USER_SUCCESS:
             return { ...state, loading: false, token: action.payload.token, user: action.payload.user };
         case LOGIN_USER_FAILURE:
-            return { ...state, loading: false, error: action.payload.error };
+            return { ...state, loading: false, error: 'Invalid Credentials!' };
         case SIGNUP_USER: 
             return { ...state, loading: true };
         case SIGNUP_USER_SUCCESS: 
             return {...state, loading:false, user: action.payload.user }
         case SIGNUP_USER_FAILURE: 
-            return { ...state, loading: false, error: action.payload.error }
+            return { ...state, loading: false, error: 'Email/Username already exists' }
 
         default:
         return state;
