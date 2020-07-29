@@ -8,7 +8,7 @@ function generateAccessToken(user) {
 
 function login(req, res) {
     // get user from db and password and decrypt.
-    connection.connect((err) => {
+    connection.getConnection((err) => {
         if(err) console.log(err);
         connection.query("SELECT * from users where username=" + `'${req.body.username}'`,function (err,results, fields) {
             console.log(err, results[0]);
@@ -17,7 +17,6 @@ function login(req, res) {
                 res.json({ token: generateAccessToken(results[0])});
             }
         })
-        connection.end();
     })
 }
 function signUp(req, res) {
@@ -29,13 +28,13 @@ function signUp(req, res) {
         lastname: req.body.lastname,
         isAdmin: false // admins will be created through a special admin api or directly from DB
     }
-    connection.connect((err) => {
+    connection.getConnection((err) => {
         if(err) console.log(err);
         connection.query('INSERT INTO users SET ?', user, (err, results,fields) => {
             if (err) console.log(err);
             res.send({ message: 'success', user})
         })
-        connection.end();
+         ;
     })
 
 }

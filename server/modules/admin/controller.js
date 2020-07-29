@@ -8,7 +8,7 @@ function generateAccessToken(user) {
 
 function login(req, res) {
     // get user from db and password and decrypt.
-    connection.connect((err) => {
+    connection.getConnection((err) => {
         if(err) throw err;
         connection.query("SELECT * from admin_users where username=" + `'${req.body.username}'`,function (err,results, fields) {
             console.log(err, results[0]);
@@ -17,7 +17,7 @@ function login(req, res) {
                 res.json({ token: generateAccessToken(results[0])});
             }
         })
-        connection.end();
+         ;
     })
 }
 

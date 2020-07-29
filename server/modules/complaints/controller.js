@@ -50,13 +50,13 @@ function updateComplaintStatus(req, res) {
 }
 function getComplaintsByUserId(req, res) {
     const id = req.params.id;
-    connection.connect((err) => {
+    connection.getConnection((err) => {
         if(err) console.log(err);
         connection.query("SELECT * from complaints where userId=" + `${id}`, (err, results,fields) => {
             if (err) console.log(err);
             res.json(complaints)
         })
-        connection.end();
+         ;
     })
 }
 
