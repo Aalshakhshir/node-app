@@ -55,15 +55,25 @@ function updateComplaintStatus(req, res) {
     }
 }
 function getComplaintsByUserId(req, res) {
-    console.log(req.params.id);
     const id = req.params.id;
-    connection.getConnection((err) => {
-        if (err) console.log(err);
-        connection.query("SELECT * from complaints where userId=" + `${id}`, (err, results, fields) => {
+    if (req.user.isAdmin) {
+        connection.getConnection((err) => {
             if (err) console.log(err);
-            res.json(results);
-        });
-    })
+            connection.query("SELECT * from complaints", (err, results, fields) => {
+                if (err) console.log(err);
+                res.json(results);
+            });
+        })
+    }
+    else {
+        connection.getConnection((err) => {
+            if (err) console.log(err);
+            connection.query("SELECT * from complaints where userId=" + `${id}`, (err, results, fields) => {
+                if (err) console.log(err);
+                res.json(results);
+            });
+        })
+    }
 }
 function createComplaint(req, res) {
     const userId = req.user.userId;
