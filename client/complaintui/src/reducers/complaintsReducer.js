@@ -1,4 +1,4 @@
-import { GET_USER_COMPLAINTS, GET_USER_COMPLAINTS_SUCCESS, GET_USER_COMPLAINTS_FAILURE, UPDATE_COMPLAINT_STATUS, UPDATE_COMPLAINT_STATUS_FAILURE, GET_ALL_COMPLAINTS, UPDATE_COMPLAINT_STATUS_SUCCESS } from "../actions/types";
+import { GET_USER_COMPLAINTS, GET_USER_COMPLAINTS_SUCCESS, GET_USER_COMPLAINTS_FAILURE, UPDATE_COMPLAINT_STATUS, UPDATE_COMPLAINT_STATUS_FAILURE, GET_ALL_COMPLAINTS, UPDATE_COMPLAINT_STATUS_SUCCESS, ADD_NEW_COMPLAINT, ADD_NEW_COMPLAINT_SUCCESS, ADD_NEW_COMPLAINT_FAILURE } from "../actions/types";
 
 const INITIAL_STATE = {
     complaints: [],
@@ -27,6 +27,12 @@ export default function complaints(state = INITIAL_STATE, action) {
             return { ...state, error: action.payload.error };
         case UPDATE_COMPLAINT_STATUS:
             return { ...state, loading: true };
+        case ADD_NEW_COMPLAINT:
+            return { ...state, loading: true };
+        case ADD_NEW_COMPLAINT_SUCCESS:
+            return { ...state, complaints: [...complaints, action.payload], loading: false };
+        case ADD_NEW_COMPLAINT_FAILURE:
+            return { ...state, loading: false, error: action.payload.error }
         default:
             return state;
     }

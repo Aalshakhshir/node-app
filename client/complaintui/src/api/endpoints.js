@@ -8,8 +8,9 @@ export const LoginUser = (username, password) => {
             password
         }).then(res => {
             console.log(res);
-            resolve({ token: res.data.token } 
-                )}).catch(e => reject(e.response))
+            resolve({ token: res.data.token, user: res.data.user }
+            )
+        }).catch(e => reject(e.response))
     })
 }
 export const signUserUp = ({ username, email, password, firstname, lastname }) => {
@@ -24,6 +25,7 @@ export const signUserUp = ({ username, email, password, firstname, lastname }) =
     })
 }
 export const getAllUserComplaints = ({ id, token }) => {
+    console.log(id);
     return new Promise((resolve, reject) => {
         Axios.get(`${prefix}api/complaints/${id}`, {
             headers: {
@@ -34,4 +36,27 @@ export const getAllUserComplaints = ({ id, token }) => {
 }
 
 
+export const updateComplaintStatus = ({ id, status, token }) => {
+    console.log(status);
+    return new Promise((resolve, reject) => {
+        Axios.put(`${prefix}api/complaints/${id}`, {
+            status
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => resolve(res.data)).catch(e => reject(e.response))
+    })
+}
 
+export const addNewComplaint = ({ id, message, token }) => {
+    return new Promise((resolve, reject) => {
+        Axios.post(`${prefix}api/complaints/create`, {
+            message
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res => resolve(res.data)).catch(e => reject(e.response))
+    })
+}

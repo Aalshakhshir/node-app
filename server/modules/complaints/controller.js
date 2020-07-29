@@ -43,16 +43,14 @@ function updateComplaintStatus(req, res) {
     const id = req.params.id;
     const newStatus = req.body.status
     // to use mysql update statement
-    
-    if (req.user.isAdmin) {
-        connection.getConnection((err) => {
+    console.log(req.user);
+    connection.getConnection((err) => {
+        if (err) console.log(err);
+        connection.query(`UPDATE complaints SET status = ? WHERE id = ?`, [newStatus, id], (err, results, fields) => {
             if (err) console.log(err);
-            connect.query(`UPDATE complaints SET status = '${newStatus}' WHERE id = '${id}'`, (err, results, fields) => {
-                if (err) console.log(err);
-                res.json({ message: 'sucess' })
-            });
-        })
-    }
+            res.json({ message: 'sucess' })
+        });
+    })
 }
 function getComplaintsByUserId(req, res) {
     console.log(req.params.id);
@@ -68,10 +66,10 @@ function getComplaintsByUserId(req, res) {
 function createComplaint(req, res) {
     const userId = req.user.userId;
     connection.getConnection((err) => {
-        if(err) console.log(err);
-        connection.query(`INSERT INTO complaints SET ?`,{message: req.body.message, status: 'pending resolution', userId}, (err, results, fields) => {
+        if (err) console.log(err);
+        connection.query(`INSERT INTO complaints SET ?`, { message: req.body.message, status: 'pending resolution', userId }, (err, results, fields) => {
             if (err) console.log(err);
-            res.json({ success: true , complaintId: results[0].id})
+            res.json(results)
         });
     })
 }

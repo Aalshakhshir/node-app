@@ -38,7 +38,8 @@ const SignUp = ({ signUpUserConnect, loading, error, user, history }) => {
 
     return (
         <div className='LoginContainer'>
-            <SignUpForm handleSubmit={handleSubmit} handleInputChange={handleInputChange} />
+            <SignUpForm handleSubmit={handleSubmit} handleInputChange={handleInputChange} loading={loading} />
+            {error && <p style={{ color: 'red', marginTop: 10}}>{error}</p>}
         </div>
     )
 }

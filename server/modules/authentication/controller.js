@@ -14,7 +14,7 @@ function login(req, res) {
             console.log(err, results[0]);
             if (err)  console.log(err);
             if(req.body.password === results[0].password) {
-                res.json({ token: generateAccessToken(results[0])});
+                res.json({ token: generateAccessToken(results[0]), user: results[0]});
             }
         })
     })

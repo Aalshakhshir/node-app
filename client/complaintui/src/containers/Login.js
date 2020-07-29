@@ -14,7 +14,7 @@ const Login = ({ loginUserConnect, loading, error, token, history }) => {
         if (token) {
             history.push('/complaints');
         }
-    }, [token])
+    }, [token, history])
 
     const handleInputChange = (e) => {
         e.persist();
