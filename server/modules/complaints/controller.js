@@ -44,13 +44,15 @@ function updateComplaintStatus(req, res) {
     const newStatus = req.body.status
     // to use mysql update statement
     console.log(req.user);
-    connection.getConnection((err) => {
-        if (err) console.log(err);
-        connection.query(`UPDATE complaints SET status = ? WHERE id = ?`, [newStatus, id], (err, results, fields) => {
+    if (req.user.isAdmin) {
+        connection.getConnection((err) => {
             if (err) console.log(err);
-            res.json({ message: 'sucess' })
-        });
-    })
+            connection.query(`UPDATE complaints SET status = ? WHERE id = ?`, [newStatus, id], (err, results, fields) => {
+                if (err) console.log(err);
+                res.json({ message: 'success' })
+            });
+        })
+    }
 }
 function getComplaintsByUserId(req, res) {
     console.log(req.params.id);
